@@ -1,0 +1,197 @@
+\documentclass{article}
+
+% ----------------------------------------------------
+% PACKAGE
+% ----------------------------------------------------
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage[a4paper, portrait, margin=0.75in]{geometry}
+\usepackage[italian]{babel}
+\usepackage{enumerate}% http://ctan.org/pkg/enumerate
+
+% graphics
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+\usepgfplotslibrary{fillbetween}
+
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+}
+
+\title{Matematica applicata \\[1ex] \large Esercitazione 2}
+\author{Ollari Dmitri}
+
+\begin{document}
+    \maketitle
+
+
+
+\section{Esercizio 2 b}
+\begin{equation*}
+	f(x) = \begin{cases}
+		6.8035\cdot x^3 -7.8020 \cdot 10^{-56}\cdot x^2 + 2.7720\cdot x + 2.7200, & \text{if } x \in [0,0.1], \\-2.0174\cdot x^3 + 2.6462\cdot x^2 + 2.5073\cdot x + 2.7288, & \text{if } x \in (0.1,0.2], \\3.2659\cdot x^3 -5.2373 \cdot 10^{-1}\cdot x^2 + 3.1413\cdot x + 2.6866, & \text{if } x \in (0.2,0.3], \\-5.0464\cdot x^3 + 6.9574\cdot x^2 + 8.9699 \cdot 10^{-1}\cdot x + 2.9110, & \text{if } x \in (0.3,0.4], \\6.9198\cdot x^3 -7.4021\cdot x^2 + 6.6408\cdot x + 2.1452, & \text{if } x \in (0.4,0.5], \\-2.6327\cdot x^3 + 6.9267\cdot x^2 -5.2359 \cdot 10^{-1}\cdot x + 3.3392, & \text{if } x \in (0.5,0.6], \\3.6110\cdot x^3 -4.3120\cdot x^2 + 6.2196\cdot x + 1.9906, & \text{if } x \in (0.6,0.7], \\-1.8114\cdot x^3 + 7.0751\cdot x^2 -1.7513\cdot x + 3.8505, & \text{if } x \in (0.7,0.8], \\3.6346\cdot x^3 -5.9953\cdot x^2 + 8.7050\cdot x + 1.0621, & \text{if } x \in (0.8,0.9], \\-1.2727 \cdot 10^{1}\cdot x^3 + 3.8181 \cdot 10^{1}\cdot x^2 -3.1053 \cdot 10^{1}\cdot x + 1.2990 \cdot 10^{1}, & \text{if } x \in (0.9,1].
+	\end{cases}
+\end{equation*}
+
+\begin{center}
+    \begin{tikzpicture}
+
+		\pgfplotsset{
+			scale only axis,
+		}
+
+		\begin{axis}[
+			xlabel=$x$,
+			ylabel=$y$,
+			samples=100,
+			]\addplot [only marks] table {
+0 2.72
+0.1 3.004
+0.2 3.32
+0.3 3.67
+0.4 4.06
+0.5 4.48
+0.6 4.95
+0.7 5.47
+0.8 6.05
+0.9 6.69
+1 7.39
+};
+
+			
+			\addplot[][domain=0:0.1]{+6.803470882127469*x^3+-7.802027958708927e-56*x^2+2.7719652911787254*x^1+2.72*x^0};
+			\addplot[][domain=0.1:0.2]{+-2.0173544106373416*x^3+2.646247587829443*x^2+2.507340532395781*x^1+2.7288208252927646*x^0};
+			\addplot[][domain=0.2:0.3]{+3.2659467604218984*x^3+-0.5237331148061012*x^2+3.1413366729228898*x^1+2.6865544159242907*x^0};
+			\addplot[][domain=0.3:0.4]{+-5.046432631050252*x^3+6.957408337518835*x^2+0.896994237225409*x^1+2.910988659494039*x^0};
+			\addplot[][domain=0.4:0.5]{+6.919783763779111*x^3+-7.4020513362764015*x^2+6.640778106743504*x^1+2.1451508102249597*x^0};
+			\addplot[][domain=0.5:0.6]{+-2.6327024240661925*x^3+6.926677945491554*x^2+-0.5235865341404743*x^1+3.3392115837056227*x^0};
+			\addplot[][domain=0.6:0.7]{+3.611025932485659*x^3+-4.3120330963017794*x^2+6.219640090935526*x^1+1.9905662586904227*x^0};
+			\addplot[][domain=0.7:0.8]{+-1.811401305876444*x^3+7.0750641042586375*x^2+-1.751327949456766*x^1+3.850458801448624*x^0};
+			\addplot[][domain=0.8:0.9]{+3.634579291020117*x^3+-5.995289328293109*x^2+8.70495479658463*x^1+1.062116735837585*x^0};
+			\addplot[][domain=0.9:1]{+-12.726915858204023*x^3+38.18074757461207*x^2+-31.05347841603003*x^1+12.989646699621984*x^0};		\end{axis}
+
+	\end{tikzpicture}
+\end{center}
+
+\section{Esercizio 3}
+\subsection{x rispetto a t}
+
+\begin{equation*}
+	f(x) = \begin{cases}
+		1.7857 \cdot 10^{-1}\cdot x^3 -7.2857 \cdot 10^{-62}\cdot x^2 + 1.8214\cdot x + 0.0000, & \text{if } x \in [0,1], \\-8.9286 \cdot 10^{-1}\cdot x^3 + 3.2143\cdot x^2 -1.3929\cdot x + 1.0714, & \text{if } x \in (1,2], \\3.9286 \cdot 10^{-1}\cdot x^3 -4.5000\cdot x^2 + 1.4036 \cdot 10^{1}\cdot x -9.2143, & \text{if } x \in (2,3], \\3.2143 \cdot 10^{-1}\cdot x^3 -3.8571\cdot x^2 + 1.2107 \cdot 10^{1}\cdot x -7.2857, & \text{if } x \in (3,4].
+	\end{cases}
+\end{equation*}
+
+\begin{center}
+    \begin{tikzpicture}
+
+        \pgfplotsset{
+            scale only axis,
+        }
+    
+        \begin{axis}[
+            xlabel=$t$,
+            ylabel=$x$,
+            samples=100,
+            ]\addplot [only marks] table {
+    0 0
+    1 2
+    2 4
+    3 3
+    4 0
+    };
+    
+            
+            \addplot[][domain=0:1]{+0.17857142857142858*x^3+-7.285714285714286e-62*x^2+1.8214285714285714*x^1+0*x^0};
+            \addplot[][domain=1:2]{+-0.8928571428571429*x^3+3.2142857142857144*x^2+-1.3928571428571428*x^1+1.0714285714285714*x^0};
+            \addplot[][domain=2:3]{+0.39285714285714285*x^3+-4.5*x^2+14.035714285714286*x^1+-9.214285714285714*x^0};
+            \addplot[][domain=3:4]{+0.32142857142857145*x^3+-3.857142857142857*x^2+12.107142857142858*x^1+-7.285714285714286*x^0};		\end{axis}
+    
+    \end{tikzpicture}
+\end{center}
+
+\subsection{y rispetto a t}
+
+\begin{equation*}
+	f(x) = \begin{cases}
+		7.1429 \cdot 10^{-1}\cdot x^3 + 3.0857 \cdot 10^{-61}\cdot x^2 + 1.2857\cdot x + 0.0000, & \text{if } x \in [0,1], \\-2.5714\cdot x^3 + 9.8571\cdot x^2 -8.5714\cdot x + 3.2857, & \text{if } x \in (1,2], \\2.5714\cdot x^3 -2.1000 \cdot 10^{1}\cdot x^2 + 5.3143 \cdot 10^{1}\cdot x -3.7857 \cdot 10^{1}, & \text{if } x \in (2,3], \\-7.1429 \cdot 10^{-1}\cdot x^3 + 8.5714\cdot x^2 -3.5571 \cdot 10^{1}\cdot x + 5.0857 \cdot 10^{1}, & \text{if } x \in (3,4].
+	\end{cases}
+\end{equation*}
+
+\begin{center}
+    \begin{tikzpicture}
+
+        \pgfplotsset{
+            scale only axis,
+        }
+    
+        \begin{axis}[
+            xlabel=$t$,
+            ylabel=$y$,
+            samples=100,
+            ]\addplot [only marks] table {
+    0 0
+    1 2
+    2 5
+    3 2
+    4 0
+    };
+    
+            
+            \addplot[][domain=0:1]{+0.7142857142857143*x^3+3.0857142857142856e-61*x^2+1.2857142857142858*x^1+0*x^0};
+            \addplot[][domain=1:2]{+-2.5714285714285716*x^3+9.857142857142858*x^2+-8.571428571428571*x^1+3.2857142857142856*x^0};
+            \addplot[][domain=2:3]{+2.5714285714285716*x^3+-21*x^2+53.142857142857146*x^1+-37.857142857142854*x^0};
+            \addplot[][domain=3:4]{+-0.7142857142857143*x^3+8.571428571428571*x^2+-35.57142857142857*x^1+50.857142857142854*x^0};		\end{axis}
+    
+    \end{tikzpicture}
+\end{center}
+
+\section{Esercizio 4}
+
+\begin{equation*}
+  f(x) = \begin{cases}
+    8.4978 \cdot 10^{-2}\cdot x^3 + 1.1153 \cdot 10^{-1}\cdot x^2 -3.3717 \cdot 10^{-1}\cdot x + 3.3826 \cdot 10^{-1}, & \text{if } x \in [-0.4375,-0.1744], \\-5.7785 \cdot 10^{-2}\cdot x^3 + 3.6840 \cdot 10^{-2}\cdot x^2 -3.5020 \cdot 10^{-1}\cdot x + 3.3750 \cdot 10^{-1}, & \text{if } x \in (-0.1744,0.1081], \\-2.0557 \cdot 10^{-2}\cdot x^3 + 2.4768 \cdot 10^{-2}\cdot x^2 -3.4889 \cdot 10^{-1}\cdot x + 3.3745 \cdot 10^{-1}, & \text{if } x \in (0.1081,0.4016].
+  \end{cases}
+\end{equation*}
+  \begin{center}
+   \begin{tikzpicture}
+
+		\pgfplotsset{
+			scale only axis,
+		}
+
+		\begin{axis}[
+			xlabel=$x$,
+			ylabel=$y$,
+			samples=100,
+			]\addplot [only marks] table {
+-0.4375 0.5
+-0.1744 0.4
+0.1081 0.3
+0.4016 0.2
+};
+
+			
+			\addplot[][domain=-0.4375:-0.1744]{+0.08497830196090402*x^3+0.11153402132368652*x^2+-0.3371698189437342*x^1+0.338255998366125*x^0};
+			\addplot[][domain=-0.1744:0.1081]{+-0.05778470136637761*x^3+0.03684041798285277*x^2+-0.3501963833663756*x^1+0.3374987207543555*x^0};
+			\addplot[][domain=0.1081:0.4016]{+-0.02055745522968372*x^3+0.024767622060722944*x^2+-0.3488913141271934*x^1+0.3374516947594369*x^0};		\end{axis}
+
+	\end{tikzpicture}
+  \end{center}
+
+  Lo zero si ottiene in:
+  \begin{equation}
+    f(0)=3.3750 \cdot 10^{-1}
+  \end{equation}
+
+
+    
+\end{document}
