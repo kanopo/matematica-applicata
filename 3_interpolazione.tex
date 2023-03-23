@@ -1,0 +1,19 @@
+\chapter{Interpolazione - Laplace}
+
+Siano $x_0, x_1, \dots, x_n$, $n + 1$ \textbf{punti distinti} e siano $L_0(x), L_1(x), \dots, L_n(x)$ polinomi di grado $n$ tali che:
+\begin{equation}
+ L_j(x_i) = \delta_{j, i} = 
+   \begin{cases}
+      1 \quad se \quad i = j \\ 
+      0 \quad se \quad i \neq j
+   \end{cases}
+   \quad 
+   i = 0,1, \dots, n
+\end{equation}
+
+Dove:
+\begin{equation}
+  L_n(x) = \prod_{k=n,k\neq n}^{n} \displaystyle\frac{x - x_k}{x_n - x_k}
+\end{equation}
+
+
