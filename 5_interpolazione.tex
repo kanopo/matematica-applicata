@@ -1,0 +1,387 @@
+\chapter{Interpolazione - Splines}
+\section{Decomposizione}
+Sia $[a, b]$ un'intervallo chiuso e limitato, $\Delta$ è una sua decomposizione:
+\begin{equation}
+  \Delta = \{a = x_0 < x_1 < \dots < x_i < \dots < x_n = b\}
+\end{equation}
+e siano dati i valori osservaati $y_0, \dots, y_n$, vogliamo costruire una decomposizione
+su ciascun tratto $[x_{i-1}, x_1]$ della decomposizione $\Delta$ un polinomio lineare che interpoli
+i dati $y_{i-1}, y_i$.
+
+\begin{equation}
+ S_1(x) = \begin{cases}
+    S_1^{(1)}(x) = y_0 + f[x_0, x_1](x - x_0) \quad x_0 \leq x \leq x_1 \\
+    S_1^{(2)}(x) = y_1 + f[x_1, x_2](x - x_1) \quad x_1 \leq x \leq x_2 \\
+    S_1^{(3)}(x) = y_2 + f[x_2, x_3](x - x_2) \quad x_2 \leq x \leq x_3 \\
+    
+    \dotfill \\
+
+    S_1^{(n)}(x) = y_{n-1} + f[x_{n-1}, x_n](x - x_{n-1}) \quad x_{n-1} \leq x \leq x_n
+ \end{cases}
+\end{equation}
+
+
+Osservo che la continuità $S_1^{(i)} \in C^{\infty}([x_i, x_{i+1}])$ mache la continuità in 
+$S_1(x) \in C^0[a, b]$.
+
+Quindi si hanno tanti polinomi di primo grado definiti a tratti.
+
+\section{Ricerca binaria}
+Per calcolare $S_1(x)$ in un generico punto bisogna prima determinare in che sottointervallo cade il punto, il modo più comodo è fare una ricerca binaria.
+\begin{minted}[]{matlab}
+x = [1:0.1:10]
+xd = 3.17
+n = length(x);
+sinistra = 1;
+destra = n;
+
+while destra > sinistra + 1
+  meta = floor((sinistra + destra) / 2);
+  if xd < x(meta);
+    destra = meta;
+  else
+    sinistra = meta;
+  end
+end
+\end{minted}
+
+
+\section{Splines}
+Siano $\varphi(x), i=0,1,\dots, n$ le funzioni così definite:
+
+\begin{equation}
+  \varphi_0(x) = \begin{cases}
+    \displaystyle\frac{x_1-x}{x_1-x_0} \quad x \in [x_0, x_1] \\  
+    0 \quad\quad\quad\quad x \notin [x_0, x_1]
+  \end{cases}
+\end{equation}
+
+
+
+\begin{equation}
+  \varphi_i(x) = \begin{cases}
+  0 \quad\quad\quad\quad x \notin [x_{i-1}, x_{i+1}] \\
+
+  
+    \displaystyle\frac{x-x_{i-1}}{x_i-x_{i-1}} \quad x \in [x_{i-1}, x_i] \\  
+
+    \displaystyle\frac{x_{i+1}-x}{x_{i+1}-x_{i}} \quad x \in [x_{i}, x_{i + 1}]
+
+
+  \end{cases}
+\end{equation}
+
+\begin{equation}
+  \varphi_n(x) = \begin{cases}
+
+    \displaystyle\frac{x-x_{n-1}}{x_n-x_{n-1}} \quad x \in [x_{n-1}, x_n] \\  
+  0 \quad\quad\quad\quad x \notin [x_{n-1}, x_{n}]
+  \end{cases}
+\end{equation}
+
+
+Le funzioni $\varphi_i(x)$ prendono il nome di funzioni \textbf{spline} di grado 1, e verificano le seguenti condizioni:
+\begin{equation}
+  \varphi_i(x_j) = \begin{cases}
+  1 \quad\quad\quad\quad j=i \\
+  0 \quad\quad\quad\quad j\neq i
+  \end{cases}
+\end{equation}
+
+Sono linearmente indipendenti sull'intervallo $[a, b]$(facendo la combinazione lineare e uguagliaandola a zero, i coefficenti sono tutti zero), sono base canonica.
+
+
+Gli errori sui dati si riducono quando ci si allontana dal punto usato come intervallo locale della spline
+
+\section{Stima dell'errore}
+
+Siano $y_i = f(x_i), i = 0, 1, \dots, n$ dove $f(x)$ è definita nell'intervallo $[a, b]$.
+$S_1(x)$ è la spline lineare che interpola la funzione, l'errore è dato da:
+\begin{equation}
+  r(x) = f(x) - S_1(x) \quad \forall x \neq x_i
+\end{equation}
+
+Indico con $h_i$ l'ampiezza dell'intervallo dove voglio calcolare il punto.
+
+Se $f(x) \in C^2[a, b]$ allora posso scrivere:
+\begin{equation}
+  | f(x) - S_1(x) | = \displaystyle\frac{|f''(\epsilon_x)|}{2} |(x-x_{i-1})(x-x_i)|
+\end{equation}
+
+Quindi per una funzione $f(x) \in C^2[a, b]$ dopo vari pasasggi tediosi posso scrivere:
+\begin{equation}
+  | f(x) - S_1(x) | \leq \max_{x \in [x_0, x_n]} \displaystyle\frac{|f''(\epsilon_x)|}{8} | h_2
+\end{equation}
+
+Dove $h = max_{1\leq i \leq n} h_i$ è la norma della decomposizione.
+
+Con $h$ che tende a zero, l'errore tente a zero e aumentano i polinomi per descrivere l'intervallo.
+
+\section{Polinomio di Hermite generalizzato}
+
+Vogliamo costruire un polinomio definito a tratti che in ogni intervallo coincide con 
+la restrizione di un polinomio di grado minore o uguale a 3, soddisfacendo le seguenti condizioni:
+\begin{equation}
+  p(x_i) = y_i \quad i = 0, 1, \dots, n
+\end{equation}
+
+
+\begin{equation}
+  p'(x_i) = y'_i \quad i = 0, 1, \dots, n
+\end{equation}
+
+Considerando la seguente forma del polinomio:
+\begin{equation}
+  p_i(x) = a_i + b_i(x - x_{i-1}) + c_i(x-x_{i-1})^2 + d_i(x- x_{i-1})^2(x-x_i)
+  \label{eq:hermite_generale}
+\end{equation}
+
+Dove la sua derivata è definita:
+\begin{equation}
+  p_i'(x) = b_i + 2c_i(x-x_{i-1}) + 3d_i(x-x_{i-1})^2
+\end{equation}
+
+
+
+Per determinare i coefficienti imponiamo le 4 condizioni dettate da $h_i = x_i - x_{i-1}$:
+\begin{enumerate}
+  \item $p_i(x_{i-1}) = y_{i-1}$ da cui ottengo $a_i= y_{i-1}$
+  \item $p'_i(x_{i-1}) = y'_{i-1}$ da cui ottengo $b_i = y'_{i-1}$
+  \item $p_i(x_i) = y_i = a_i + b_ih_i + c_ih^2_i$ da cui ottengo $c_i = \frac{y_i-y_{i-1}}{h_i^2} - \frac{y'_{i-1}}{h_i}$
+  \item $p'_i(x_i) = y'_i$ da cui ottengo $d_i = \frac{y_i'-y_{i-1}'-2c_ih_i}{h_i^2}$
+\end{enumerate}
+
+
+Sostituendo $c_i$si ottiene l'espressione di $d_i$:
+
+\begin{equation}
+  d_i = \frac{y_i' + y_{i-1}'}{h_i^2} - 2 \frac{y_i - y_{i-1}}{h_i^3} 
+\end{equation}
+
+Il polinomio \ref{eq:hermite_generale} prende il nome di polinomio di \textbf{Hermite generalizzato}.
+
+\section{Spline Interpolante}
+\subsection{Definizione di spline interpolante}
+Sia $\Delta = \{a = x_0 < \dots < x_i = b\}$ una decomposizione dell'intervallo $[a, b]$. Una funzione spliune di grado $m$
+con nodi $x_i$ e' una funzione $S_m(x)$ in $[a, b]$ tale che su ogni sottointervallo $[x_{i-1}, x_i]$, $S_m(x)$ e' 
+un polinomio di grado $m$ ed e' derivabile $m-1$ volte:
+\begin{equation}
+  S_m(x) \in C^{m-1}([a, b])
+\end{equation}
+
+\subsection{Spline cubiche}
+Avendo un'intervallo $[a, b]$ con decomposizione $\Delta$, assegnanti arbitrariamente i valori delle $y$, si dice spline cubica interpolante relativa alla decomposizione
+$\Delta$ la funzione $S_{3,\Delta}(x)$ tale che:
+\begin{enumerate}
+  \item La spline cubica $S_{3,\Delta}(x)$ e' una funzione polinomiale definita a tratti e su ciascun tratto della decomposizione vale come un polinomio di terzo grado
+  \item $S_{3,\Delta}(x) \in C^2([a, b])$
+  \item $S_{3,\Delta}(x_i) = y_i$
+\end{enumerate}
+
+La spline cubica si scrive:
+\begin{equation}
+  S_{3,\Delta}(x) =
+  \begin{cases}
+    S_{3, \Delta}^1(x) = a_0^1 + a_1^1(x - x_0) + a_2^1(x - x_0)^2 + a_3^1(x - x_0)^3 \quad x_0 \leq x \leq x_1 \\ 
+    S_{3, \Delta}^2(x) = a_0^2 + a_1^2(x - x_1) + a_2^2(x - x_1)^2 + a_3^2(x - x_1)^3 \quad x_1 \leq x \leq x_2 \\ 
+    \dotfill \\
+    S_{3, \Delta}^n(x) = a_0^n + a_1^n(x - x_{n-1}) + a_2^n(x - x_{n-1})^2 + a_3^n(x - x_{n-1})^3 \quad x_{n-1} \leq x \leq x_n 
+  \end{cases}
+\end{equation}
+
+I gradi di liberta' delle incognite sono $4n$(coefficienti della spline).
+I vincoli sono $3(n-1)$ per la regolarita' $C^2([x_0, x_n])$ e $n+1$ vincoli per l'interpolazione fra gli $n+1$ nodi.
+
+I vincoli si sommano in $4n -2$ che ci permette di cotruire $\infty^2$ spline cubiche interpolanti.
+
+\subsection{Momenti della spline}
+Per ridurre la complessita' del calcolo della spline, si usano i \textbf{Momenti} della spline:
+\begin{equation}
+  M_i := [S''_{3, \Delta}{x}]_{x=x_i} 
+\end{equation}
+
+Se fossero noti momenti $M_{i-1}$ e $M_i$ potrei scrivere:
+\begin{equation}
+  [S^i_{3, \Delta}{x}]'' = \frac{(x - x_{i-1} M_i + (x_i - x) M_{i-1})}{h_i}
+\end{equation}
+
+Integrando due volte la funzione si ottiene:
+
+
+\begin{equation}
+S^i_{3, \Delta}(x) = \frac{M_i}{6h_i}(x - x_{i-1})^3 + \frac{M_{i-1}}{6h_i}(x_i - x)^3 + A_i (x - x_{i-1}) + B_i 
+\end{equation}
+
+Dove $A_i$ e $B_i$ sono costanti da determinare introdotte dalla doppia integrazione nell'intervallo $[x_{i-1}. x_i]$:
+
+\begin{enumerate}
+  \item in $x_{i-1}$ si ottiene $y_{i-1} = S^i_{3, \Delta}(x_{i-1}) \Rightarrow B_i = y_{i-1} - \frac{h_i^2M_{i-1}}{6}$
+  \item in $x_i$ si ottiene $y_i = S^i_{3, \Delta}(x_i) \Rightarrow A_i = \frac{y_i}{h_i} - \frac{h_iM_i}{6} - \frac{B_i}{h_i}$
+\end{enumerate}
+
+
+
+Sostituendo $A_i$ e $B_i$ si ottiene la spline cubica nell'intervallo $[x_{i-1, x_i}]$ in funzione dei momenti $M_{i-1}$ e $M-i$:
+\begin{equation}
+  S^i_{3, \Delta}(x) = \frac{(x - x_{i-1})^3}{6h_i} M_i + \frac{(x_i - x)^3}{6h_i}M_{i-1} + (x - x_{i-1}) [\frac{y_i - y_{i-1}}{h_i} + \frac{h_i}{6}(M_{i-1} - M_i)] + y_{i-1} - h^2_i\frac{M_{i-1}}{6}
+\end{equation}
+
+La derivata prima della spline e':
+\begin{equation}
+[S^i_{3, \Delta}(x)]' = \frac{(x - x_{i-1})^2}{2h_i} M_i - \frac{(x_i - x)^2}{2h_i}M_{i-1} + \frac{y_i - y_{i-1}}{h_i} + \frac{h_i}{6}(M_{i-1} - M_i)
+  \label{eq:derivata_prima_spline_momenti}
+\end{equation}
+
+La derivata seconda e':
+\begin{equation}
+  [S^i_{3, \Delta}(x)]'' = \frac{(x - x_{i-1})}{h_i} M_i + \frac{(x_i - x)}{h_i} M_{i-1} 
+\end{equation}
+
+La derivata terza e':
+\begin{equation}
+  [S^i_{3, \Delta}(x)]''' = \frac{1}{h_i}(M_i + M_{i-1})
+\end{equation}
+
+\subsubsection{Clacolare i coefficienti della spline partendo da i momenti}
+\begin{itemize}
+  \item $a^i_0 = y_{i-1}$
+  \item $a^i_1 = \frac{y_i - y_{i-1}}{h_i} - \frac{h_i}{6}(2M_{i-1} + M_i)$
+  \item $a^i_2 = \frac{M_{i-1}}{2}$
+  \item $a^i_3 = \frac{M_i - M_{i-1}}{6h_i}$
+\end{itemize}
+
+
+\subsubsection{Clacolo dei momenti}
+Prendo due intervalli contigui e impongo la derivabilita' prima nel nodeo in comune:
+\begin{equation}
+  [S^i_{3, \Delta}(x)]'_{x=x_i} = [S^{i+1}_{3, \Delta}(x)]'_{x=x_i}, \quad i = 1, \dots, n-1
+\end{equation}
+
+Facendo riferimento alla derivata prima della spline (\ref{eq:derivata_prima_spline_momenti}),
+pongo le seguenti variabili per comodita' a:
+\begin{equation}
+  \alpha_i = \frac{h_i}{h_i + h_{i+1}}
+\end{equation}
+
+\begin{equation}
+  \beta_i = \frac{h_{i+1}}{h_i + h_{i+1}}
+\end{equation}
+
+\begin{equation}
+  d_i = \frac{6}{h_i + h_{i+1}}(\frac{y_{i+1} - y_i}{h_{i+1}} - \frac{y_i - y_{i-1}}{h_i})
+\end{equation}
+
+Posso riscrivere la spline come:
+\begin{equation}
+  \alpha_i M_{i-1} + 2M_i + \beta_i M_{i+1} = d_i, \quad i = 1, \dots, n-1
+\end{equation}
+
+
+Scrivo due righe di esempi perche' il valore della $i$ ed il suo indice rendono tutto sbatti:
+\begin{equation*}
+  i = 1 \quad   \alpha_1 M_{0} + 2M_1 + \beta_1 M_{2} = d_1
+\end{equation*}
+
+\begin{equation*}
+  i = 2 \quad   \alpha_2 M_{1} + 2M_2 + \beta_2 M_{3} = d_2
+\end{equation*}
+
+Possiamo cosi' costruire la matrice:
+\begin{equation}
+  \begin{bmatrix}
+    \alpha_1 & 2 & \beta_1 & 0 & \cdots & \cdots & 0 \\
+    0 & \alpha_2 & 2 & \beta_2 & 0 & \cdots & \cdots \\
+    \dots & \dots& \dots& \dots& \dots& \dots& 0\\
+    0 & \cdots & \cdots & 0 & \alpha_{n-1} & 2 & \beta_{n-1}
+  \end{bmatrix}
+  \begin{bmatrix}
+    M_0 \\
+    M_1 \\
+    \dots \\
+    M_n \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    d_1 \\
+    d_2 \\
+    \dots \\
+    d_{n-1} \\
+  \end{bmatrix}
+\end{equation}
+
+\section{Spline cubica naturale}
+Una spline cubica e' naturale se:
+\begin{itemize}
+  \item $M_0 = 0$
+  \item $M_n = 0$
+\end{itemize}
+Che ci porta ad avere:
+\begin{equation}
+  \begin{bmatrix}
+    2 & \beta_1 & 0 & \cdots  & 0 \\
+    \alpha_2 & 2 & \beta_2 & 0 &  \cdots \\
+    \dots& \dots& \dots& \dots& \dots\\
+    \cdots & \cdots & 0 & \alpha_{n-1} & 2 
+  \end{bmatrix}
+  \begin{bmatrix}
+    M_1 \\
+    \dots \\
+    M_{n-1} \\
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    d_1 \\
+    d_2 \\
+    \dots \\
+    d_{n-1} \\
+  \end{bmatrix}
+\end{equation}
+
+Ottengo cosi' una matrice triangolare con le seguenti proprieta':
+\begin{itemize}
+  \item $\alpha_i + \beta_i = 1$  
+  \item $i = 2 , \dots, n-2$  
+  \item $0 < \beta_1 \leq 1$
+  \item $0 < \alpha_{n-1} \leq 1$
+\end{itemize}
+Quindi stiamo parlando di una matrice diagonal dominante che ci permette di identificare la matrice come \textbf{non singolare}.
+
+Quindi possiamo risolvere il sistema, determinando i momenti e successivamente i coefficienti della spline:
+\begin{itemize}
+  \item $a^i_0 = y_{i-1}$
+  \item $a^i_1 = \frac{y_i - y_{i-1}}{h_i} - \frac{h_i}{6}(2M_{i-1} + M_i)$
+  \item $a^i_2 = \frac{M_{i-1}}{2}$
+  \item $a^i_3 = \frac{M_i - M_{i-1}}{6h_i}$
+\end{itemize}
+
+\section{Spline cubica vincolata}
+Le condizioni per questa famiglia di spline sono:
+\begin{itemize}
+  \item $[S_{s, \Delta}(x)]'_{x=x_0} = y'_0$
+  \item $[S_{s, \Delta}(x)]'_{x=x_n} = y'_n$
+\end{itemize}
+
+Quindi si parte dalla formula della derivata prima della spline(\ref{eq:derivata_prima_spline_momenti})  e la si equaglia a $y'_0$.
+
+L'equazione ottenuta e':
+\begin{equation}
+  2M_0 + M_1 = d_0
+\end{equation}
+Dove $d_0$:
+\begin{equation}
+  d_0 = \frac{6}{h_1}(\frac{y_1-y_0}{h_1} - y'_0)
+\end{equation}
+
+E con il secondo vincolo si ottiene:
+
+\begin{equation}
+  M_{n-1} + 2M_n = d_n
+\end{equation}
+Dove $d_n$:
+\begin{equation}
+  d_n = \frac{6}{h_n}( y'_n - \frac{y_n-y_{n-1}}{h_n})
+\end{equation}
+
+Se volessimo calcolare la matrice in questo caso otterremmo una matrice triangolare, diagoal dominante e irriducibile.
+
+
