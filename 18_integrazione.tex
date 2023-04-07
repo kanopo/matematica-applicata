@@ -1,0 +1,90 @@
+\chapter{Integrazione}
+
+\section{Esempi di problemi}
+Il significato degli integrali definit dipende dal contesto applicativo di cui fanno
+parte.
+
+\subsection{Spazio percorso in moto rettilineo}
+Lo spazio percorso con velocità costante $v$ in un tempo $t = b - a$ è dato da:
+\begin{equation*}
+  s = v(b-a)
+\end{equation*}
+
+Nel caso la velocità non fosse costante ma variasse nel tempo con una funzione:
+\begin{equation*}
+  v = f(t)
+\end{equation*}
+
+Bisognerebbe:
+\begin{enumerate}
+  \item dividere l'intervallo in $n$ parti uguali
+  \item l'ampiezza dell'intervallo sarebbe $h = (b - a) / n$
+  \item il tempo di ogni intervallo sarebbe $t_i = a + ih$ dove $i = 0, 1, \dots, n$
+  \item si approssima la velocità dell'intervallo alla velocità iniziale dello stesso
+  \item Lo spazio finale percorso dal mobile risulta $\sum_{i = 0}^{n-1} f(t_i)h$
+\end{enumerate}
+
+Si ottiene così:
+\begin{equation*}
+  s =\int_a^b f(t) dt
+\end{equation*}
+Questa è una lunghezza.
+
+\subsection{Lavoro compiuto da una forza}
+Avendo una forza con intensità variabile applicata ad un punto che si sposta posso ricavare come prima:
+
+\begin{equation*}
+  L =\int_a^b f(x) dx
+\end{equation*}
+Questo è un lavoro.
+\subsection{Valore medio di una funzione}
+\begin{equation*}
+  \frac{1}{b-a}\int_a^b f(x)dx
+\end{equation*}
+
+\section{Quadratura interpolatoria dei trapezi}
+\begin{equation}
+  T_N(f) = \frac{b-a}{2N}[f(a)+ 2\sum_{i=1}^{N-1}f(x_i) + f(b)] 
+\end{equation}
+
+Si può fare quando una funzione reale è definita su un intervallo chiuso e limitato $[a, b]$.
+
+Quando si approssima l'integrale $I(f)$ con i trapezi $T_N(f)$ l'errore è dato da:
+\begin{equation}
+  r(T_n) = I(f) - T_N(f) = \sum_{i=0}^{N-1}r_i
+\end{equation}
+Dove $r_i$ è il resto per l'iesimo intervallo.
+
+\subsection{Teoremi integrazione}
+\subsubsection{Teorema 1}
+se $f: [a, b]  \Rightarrow R$ è continua(integrabile) allora esiste un punto $c \in [a, b]$ tale che:
+\begin{equation*}
+  \int_a^b f(x)dx = (b-a)f(c)
+\end{equation*}
+
+\subsubsection{Teorema 2}
+Se nell'integrale $\int_a^b f(x)g(x)dx$ una delle due funzioni, suppongo $g(x)$, è di segno
+costante su tutto l'intervallo allora esiste un punto $c \in [a, b]$ tale che:
+\begin{equation*}
+  \int_a^b f(x)g(x)dx = f(c)\int_a^b g(x)dx
+\end{equation*}
+
+
+\subsection{Resto}
+Posso usare la teoria degli integrali di prima per poter riscrivere il resto come:
+\begin{equation}
+  r_i = -\frac{h^3}{12}f''(c_i)
+\end{equation}
+
+Dove $c$ è un punto opportuno nell'intervallo $x_i, x_i +1$, posso applicare questa relazione su tutti gli intervalli
+e ottengo il resto totale della quadratura come:
+\begin{equation}
+  r(T_N) = \sum_{i = 0}^{N-1} r_i = -\frac{h^3}{12}\sum_{i = 0}^{N-1}  f''(c_i) = -\frac{h^3}{12} N f''_M
+\end{equation}
+
+Dove $f''_M$ è la media degli $N$ valori $f''(c_i)$.
+
+Essite un punto $\varepsilon \in (a, b)$ tale che $f''(\varepsilon) = f''_M$.
+
+
+
