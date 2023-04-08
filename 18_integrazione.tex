@@ -84,7 +84,58 @@ e ottengo il resto totale della quadratura come:
 
 Dove $f''_M$ è la media degli $N$ valori $f''(c_i)$.
 
-Essite un punto $\varepsilon \in (a, b)$ tale che $f''(\varepsilon) = f''_M$.
+Esiste un punto $\varepsilon \in (a, b)$ tale che $f''(\varepsilon) = f''_M$.
 
+
+
+Si ottiene l'espressione del resto della formula dei trapezi:
+\begin{equation}
+  r(T_N) = -\frac{1}{12}(\frac{b-a}{N})^3 N f''(\varepsilon) = -\frac{(b-a)^3}{12N^2}f''(\varepsilon)
+\end{equation}
+Oppure posso scrivere:
+\begin{equation}
+  r(T_N) = -\frac{1}{12}\frac{(b-a)3}{N^2} f''(\varepsilon) = -\frac{h^2}{12}(b-a)f''(\varepsilon), \quad h = \frac{b-a}{N}
+\end{equation}
+
+\section{Alcuni richiami}
+\subsection{Teorema 1}
+Se ho due funzioni continue nell'intervallo $[a, b]$ allora:
+\begin{equation*}
+  \int_a^b [c_1f_1(x) + c_2f_2(x)]dx = c_1\int_a^b f_1(x)dx + c_2\int_a^b f_2(x)dx
+\end{equation*}
+
+\subsection{Teorema 2}
+Se una funzione e' continua in $[a, b]$ allora:
+\begin{equation*}
+  |\int_a^b f(x)dx| \leq \int_a^b |f(x)|dx
+\end{equation*}
+
+\subsection{Corollario}
+Se una funzione e' continua in $[a, b]$, si ha:
+\begin{equation*}
+  m(b-a) \leq \int_a^b f(x)dx \leq M(b-a)
+\end{equation*}
+
+Dove $m$ e' il valore piu' piccolo presente nell'intervallo $[a, b]$, mentre $M$ e' il massimo valore
+dell'intervallo.
+
+Inoltre esiste $c \in [a, b]$ tale che:
+\begin{equation*}
+  \int_a^b f(x)dx = f(c)(b-a)
+\end{equation*}
+
+Usando il teorema 1, si puo' scrivere $m \leq \mu \leq M$ dove :
+\begin{equation*}
+  \frac{1}{b-a}\int_a^b f(x)dx = \mu
+\end{equation*}
+
+Che significa che avendo la funzione $f$ continua nell'intervallo, assume tutti i valori compresi tra minimoi e massimo.
+
+Per il secondo teorema della media integrale si sfrutta il teorema di Weierstrass,
+Sia $[a,b] \subset R$ un intervallo chiuso e limitato non vuoto e sia $f$ uan funzione continua che va da 
+$[a,b] \Rightarrow R$.
+
+Allora $f(x)$ ammette almeno un punto di massimo assoluto e un punto di minimo assoluto nell'intervallo
+$[a, b]$.
 
 
