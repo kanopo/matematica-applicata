@@ -1,0 +1,16 @@
+\chapter{Eqauzioni non lineari}
+
+\section{Criteri di arresto}
+Non sempre il criterio di arresto:
+\begin{equation*}
+  |x_{k+1}-x_k|<\epsilon
+\end{equation*}
+
+La formula precedente si puo' trasformare come:
+\begin{equation*}
+  |x_{k+1}-x_k| < \frac{\epsilon}{|g'(\epsilon_i) - 1|}
+\end{equation*}
+
+Quindi anche in caso di una $g'(x)$ vicina a 1, l'errore cresce un botto.
+
+

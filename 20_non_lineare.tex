@@ -121,7 +121,59 @@ metodo delle tangenti e' monotona convergente alal radice $\alpha$.
 }
 
 \section{Metodi iterativi}
-La funzione $g(x)$ e' detta funzione di iterazione e le sue soluzioni sono detti punti fissi
-di $g(x)$.
+Il metodo delle tangenti e' un caso particolare del metodo iterativo nella forma:
+\begin{equation*}
+  x_{i+1} = g(x_i), \quad i = 0, 1, \dots
+\end{equation*}
 
-Per semplicita' considero $g\in C^1[a, b]$
+% La funzione $g(x)$ e' detta funzione di iterazione e le sue soluzioni sono detti punti fissi
+% di $g(x)$.
+%
+% Per semplicita' considero $g\in C^1[a, b]$
+
+Con cui e' possibile ottenere tutti i punti approssiamti partendo da un punto $x_0$.
+Approssimo la soluzionie del'equazione:
+\begin{equation*}
+  x = g(x)
+\end{equation*}
+
+Questa funzione viene chiamata funzione di iterazione e le soluziuone sono dette punti fissi.
+
+Per semplicita' considero $g(x)$ con continuita' di ordine 1, quindi $g \in C^1([a, b])$.
+
+\subsection{Convergenza di un metodo iterativo}
+
+Se la successione converge ad un valore $\alpha$:
+\begin{equation*}
+  \alpha = \lim_{i \to \infty} x_i
+\end{equation*}
+
+Ne risulta che:
+\begin{equation*}
+  \alpha = g(\alpha)
+\end{equation*}
+
+Quindi $\alpha$ e' la soluzione dell'equazione $x = g(x)$.
+
+Per ottere una successione convergente dobbiamo scegliere:
+\begin{itemize}
+  \item il punto dal quale far partire l'iterazione
+  \item l'algoritmo di iterazione
+\end{itemize}
+
+Se si sceglie un'algoritmo giusto ma si parte dal punto sbagliato, c'e' possibilita' di non arrivare
+alla convergenza.
+
+\subsubsection{Teorema del punto fisso}
+
+Siano $\alpha$ un punto fisso di $g(x)$ e $S$ un intorno circolare chiuso di $\alpha$, tali che
+
+\begin{equation*}
+  |g'(x)| < 1, \quad \forall x \in S
+\end{equation*}
+
+Se prendo un punto $x_0 \in S$, ogni $x_i$ definito dalla:
+\begin{equation*}
+  x_{i+1} = g(x_i), \quad i = 0, 1, \dots
+\end{equation*}
+Appartiene ad $S$ e converge ad $\alpha$.
