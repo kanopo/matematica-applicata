@@ -13,4 +13,97 @@ La formula precedente si puo' trasformare come:
 
 Quindi anche in caso di una $g'(x)$ vicina a 1, l'errore cresce un botto.
 
+Per evitare questo tipo di errore si utilizzano delle condizioni di arresto del tipo:
+\begin{equation}
+  |x_{i+1}-x_i| < \epsilon \min(|x_i|, |x_{i+1}|), \quad |x_i|, |x_{i+1}| \neq 0
+\end{equation}
+
+con cui si controlla l'errore relativo, o la condizione:
+\begin{equation}
+  |f(x_i)| < \epsilon
+\end{equation}
+
+Che si converte in:
+\begin{equation}
+  f(x_i) = f(x_i) - f(\alpha) = f'(\eta)(x_i-\alpha)
+\end{equation}
+
+da cui si ricava:
+\begin{equation}
+  |x_i - \alpha| < \frac{\epsilon}{|f'(\eta)|}
+\end{equation}
+
+Quindi a parità di valore di $\epsilon$ l'errore assoluto risulta grande se $f'(\eta)$ è vicina a 0.
+
+È inoltre necessario stabili un numero massimo di iterazioni da effettuare di modo da non tenere rsorse occupate
+nel caso di convergenza lenta.
+
+\section{Ordine di convergenza}
+Per valutare la bontà di convergenza di un algoritmo, si osserva con che velocità convergono ad una stessa 
+soluzione e si valuta la velocità di convergenza.
+
+Sia ${x_i}$ una successione convergente ad $\alpha$ e sia $x_i \neq \alpha \forall i$, se essite un numero reale $p\geq 1$ tale che :
+\begin{equation}
+  \lim_{i \to \infty} \frac{|x_{i+1}-\alpha|}{|x_i-\alpha|^p} = \gamma
+\end{equation}
+Dove la quantità $\gamma$:
+\begin{equation}
+  \begin{cases}
+    0 < \gamma < 1 \quad\quad \text{se}\quad p = 1 \\
+    0<\gamma \quad\quad\quad \text{se}\quad p > 1
+  \end{cases}
+\end{equation}
+
+La successione ha \textbf{ordine di convergenza $p$}.
+La costante $\gamma$ è detta \textbf{fattore di convergenza}.
+
+\textbf{Se $p = 1$ la convergenza è lineare, se $p > 0$ la convergenza è superlineare.}
+
+Se nel limite la $\gamma = 1$ quando $p=1$ si dice che la convergenza è sublineare.
+
+Un metodo iteratico convergente ad $\alpha$ si dice di ordine $p$ se tutte le successioni
+ottenute al variare del punto iniziale in un intorno di $\alpha$ convergono con ordine $p$.
+
+\section{Teorema}
+
+Se in un intorno $S$ di $\alpha$ è $g(x)\in C^P(S)$ con $p \geq 2$ intero e le derivate di $g(x)$
+sono tutte uguale a $0$ tranne l'ultima che è diversa da 0, questo metodo ha convergenza $p$.
+
+\section{Ordine del metodo delle tangenti}
+Se la tangente ha:
+\begin{itemize}
+  \item $f \in C^2([(a, b)])$
+  \item $f'(\alpha) \neq 0$
+  \item $f''(\alpha) \neq 0$
+\end{itemize}
+
+l'ordine dipende da:
+\begin{equation}
+  \lim_{i \to \infty} \frac{x_{i+1} - \alpha}{(x_i - \alpha)^2} = \frac{f''(\alpha)}{2f'(\alpha)}
+\end{equation}
+
+E questo limite è finito e diverso da zero, quindi il metodo delle tangenti ha ordine di convergenza 2.
+
+
+Se le ipotesi di prima non sono verificate, la convergenza è più complicata da analizare,
+esistono due casi, $\alpha$ è soluzione multipla oppure semplice.
+
+Se per un intero $r > 0$ è $f(x) \in C^r([a, b])$, una soluzione $\alpha$ si dice di molteplicità $r$ se 
+essite i limite finito e non nullo di:
+\begin{equation}
+  \lim_{x \to \alpha} \frac{f(x)}{(x-\alpha)^r}
+\end{equation}
+
+In questo caso:
+\begin{equation}
+  f(\alpha) = f'(\alpha) = \cdots = f^{r-1}(\alpha) = 0, f^r(\alpha) \neq 0
+\end{equation}
+
+si ha il sequnte teorema:
+Sia $\alpha \in [a, b]$ soluzione di $f(x)=0$, sia $f'(x)\neq 0$ per $x \in [a, b] - {a}$
+\begin{itemize}
+  \item Se $\alpha$ è di molteplicità 1 e $f(x)\in C^2([a, b])$ allora il metodo delle tangenti converge con ordine almeno 2, è 2 se $f''(\alpha) \neq 0$
+  \item Se $\alpha$ ha molteplicità finita $r \geq 2$ e se $f(x) \in C^r([a, b])$ allora il metodo delle tangenti converge linearmente.
+\end{itemize}
+
 
