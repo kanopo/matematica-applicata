@@ -29,3 +29,22 @@ Dove $\omega_n(x)$ è:
 \begin{align}
   \omega_n(x) = \prod_{i=0}^n (x-x_i)
 \end{align}
+
+
+mentre $\beta_i$ è:
+\begin{align}
+  \beta_i = \frac{y_i}{\prod_{i=0, i\neq j}^n (x_j - x_i)}
+\end{align}
+
+Le operazioni necesarie per il calcolo del polinomio interpolatore di Lagrange sono:
+
+\begin{itemize}
+  \item $n^2/2$ addizioni
+  \item $n^2$ moltiplicazioni
+\end{itemize}
+
+Per il calcolo del resto si ricorre alal formula:
+\begin{align}
+  r(x) &= f(x) - p_n(x) \\
+        &= \frac{f^{(n+1)}(\xi)}{(n+1)!} \omega_n(x)
+\end{align}
