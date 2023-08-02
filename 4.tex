@@ -1,0 +1,37 @@
+\chapter{Convergenza dei polinomi di interpolazione}
+
+\section{Bernstein}
+Se $f(x) \in C^1([a, b])$, il $p_n(x)$ della funzione relativo agli zeri di chebichev di grado $(n+1)$
+converge uniformemente a $f(x)$ in $[a, b]$ per $n \rightarrow \infty$.
+
+
+Se $f(x) \in C^2([a, b])$, l'errore è limitato da:
+\begin{align}
+  E = O(\frac{1}{\sqrt{n}})
+\end{align}
+
+Il polinomio di Bernstein è:
+\begin{align}
+  B_{n, k}(x) = \binom{n}{k} x^k (1-x)^{n-k}
+\end{align}
+
+Dove la binomiale è:
+\begin{align}
+  \binom{n}{k} = \frac{n!}{k!(n-k)!}
+\end{align}
+
+
+
+
+
+\section{Hermite-Fejér}
+Sia $f(x) \in C^0([a, b])$, con $[a, b]$ chiuso e limitato e sia:
+\begin{itemize}
+  \item $p_{2n+1}(x_i) = f(x_i)$
+  \item $p'_{2n+1}(x) = 0$
+\end{itemize}
+
+Se $x_i$ sono gli zeri di chebichev, allora:
+\begin{align}
+  \lim_{n \rightarrow \infty} err = 0
+\end{align}

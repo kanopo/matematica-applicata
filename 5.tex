@@ -1,0 +1,35 @@
+\chapter{Splines}
+
+
+\section{Decomposizione di un intervallo}
+Sia $[a, b]$ un'intervallo chiuso e limitato, chiamo decomposizione di $[a, b]$ un insieme finito di punti:
+
+\begin{align}
+  \Delta = \{x_0, x_1, \dots, x_n\}
+\end{align}
+
+
+
+\section{Ricerca binaria}
+Dato che le spline interpolano gli intervalli, è necessario trovare l'intervallo in cui si trova il punto da interpolare. Per fare ciò si utilizza la ricerca binaria, che permette di trovare l'intervallo in cui si trova il punto da interpolare in $O(\log n)$.
+
+\subsection{Passi dell'Algoritmo}
+
+\begin{enumerate}
+  \item \textbf{Inizializzazione}: Assicurarsi che l'insieme sia ordinato in modo ascendente.
+
+  \item \textbf{Definire l'intervallo}: Impostare un intervallo di ricerca iniziale che copra l'intero insieme. Solitamente, l'intervallo è definito da due indici: \textit{inizio} e \textit{fine}. All'inizio, \textit{inizio} sarà 0 (indice del primo elemento) e \textit{fine} sarà la lunghezza dell'insieme meno uno (indice dell'ultimo elemento).
+
+  \item \textbf{Calcolare il punto medio}: Calcolare l'indice del punto medio dell'intervallo come \textit{medio = (inizio + fine) / 2}.
+
+  \item \textbf{Confronto}: Confrontare l'elemento nel punto medio con l'elemento cercato.
+
+  \item \textbf{Trova l'elemento}: Se l'elemento nel punto medio è uguale all'elemento cercato, la ricerca è terminata, e l'elemento è stato trovato.
+
+  \item \textbf{Riduzione dell'intervallo}: Se l'elemento nel punto medio è maggiore dell'elemento cercato, impostare \textit{fine = medio - 1} per restringere l'intervallo alla metà inferiore. Altrimenti, se l'elemento nel punto medio è minore dell'elemento cercato, impostare \textit{inizio = medio + 1} per restringere l'intervallo alla metà superiore.
+
+  \item \textbf{Ripeti}: Ripetere i passaggi dal 3 al 6 fino a quando l'elemento viene trovato o finché \textit{inizio} diventa maggiore di \textit{fine}, nel qual caso l'elemento non è presente nell'insieme.
+\end{enumerate}
+
+
+
