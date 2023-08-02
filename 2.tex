@@ -1,0 +1,31 @@
+\chapter{Polinomio interpolatore di Lagrange}
+
+Il polinomio interpolatore di Lagrange si presenta nella forma:
+\begin{align}
+  L_i = \prod_{k=0, k\neq i}^n \frac{x - x_k}{x_i - x_k}
+\end{align}
+
+Invece il polinomio interpolatore costruito grazie ai polnomi di Lagrange è:
+
+\begin{align}
+  p_n(x) = \sum_{i=0}^n y_i L_i(x)
+\end{align}
+
+La caratteristica del polinomio di Lagrange è che:
+\begin{align}
+  L_i(x_j) = \begin{cases}
+    1 & \text{se } i = j \\
+    0 & \text{se } i \neq j
+  \end{cases}
+\end{align}
+
+Il polinomio interpolatore di Lagrange si può riscrivere come:
+\begin{align}
+  p_n(x)  &= \sum_{i=0}^n y_i L_i(x) \\
+          &= \omega_n(x) \sum_{i = 0}^n \frac{\beta_i}{x-x_i}
+\end{align}
+
+Dove $\omega_n(x)$ è:
+\begin{align}
+  \omega_n(x) = \prod_{i=0}^n (x-x_i)
+\end{align}
