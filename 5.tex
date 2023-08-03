@@ -33,3 +33,37 @@ Dato che le spline interpolano gli intervalli, è necessario trovare l'intervall
 
 
 
+\section{Errore della spline}
+L'errore della spline è definito come:
+\begin{align}
+  r(x) &= f(x) - S(x), \quad x \neq x_i \\
+       &= | f(x) - S(x) | = \frac{1}{(n+1)!} | f^{(n+1)}(\xi) | \omega(x) \\
+       &= \frac{1}{(n+1)!} | f^{(n+1)}(\xi) | \prod_{i=0}^n (x - x_i)
+\end{align}
+
+
+
+
+
+\section{Spline cubica}
+Sia $[a, b]$ un intervallo chiuso e limitato, sia $f$ una funzione definita su $[a, b]$ e sia $\Delta = \{x_0, x_1, \dots, x_n\}$ una decomposizione di $[a, b]$. Una spline cubica è una funzione $S$ definita su $[a, b]$ tale che:
+
+\begin{align}
+  S_{3, \Delta}(x) = \begin{cases}
+    S_{3, \Delta}^1(x) = a^1_0 + a^1_1(x - x_0) + a^1_2(x - x_0)^2 + a^1_3(x - x_0)^3 & x \in [x_0, x_1] \\
+    S_{3, \Delta}^2(x) = a^2_0 + a^2_1(x - x_1) + a^2_2(x - x_1)^2 + a^2_3(x - x_1)^3 & x \in [x_1, x_2] \\
+    \dotfill \\
+    S_{3, \Delta}^n(x) = a^n_0 + a^n_1(x - x_{n-1}) + a^n_2(x - x_{n-1})^2 + a^n_3(x - x_{n-1})^3 & x \in [x_{n-1}, x_{n}]
+  \end{cases}
+\end{align}
+
+
+Le incognite sono $a^i_0, a^i_1, a^i_2, a^i_3$ per $i = 1, \dots, n$.
+I vincoli sono:
+\begin{itemize}
+  \item $3(n-1)$ per imporre $C^2([a, b])$
+  \item $n+1$ per imporre le interpolazioni ai nodi
+\end{itemize}
+
+
+Ne deriva che vincoli e incognite sono $4n - 2$.
