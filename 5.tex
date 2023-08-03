@@ -67,3 +67,93 @@ I vincoli sono:
 
 
 Ne deriva che vincoli e incognite sono $4n - 2$.
+
+\section{Momenti delle spline}
+
+
+I momenti delle spline sono definiti come:
+\begin{align}
+  M_i = [S_{3, \Delta}^i(x_i)]''_{x=x_i}
+\end{align}
+
+
+
+\subsection{Spline conoscento i momenti}
+Se conosco i momenti della spline, posso rappresentare le spline nel seguente modo:
+\begin{align}
+  S_{3, \Delta}^i(x) = \frac{(x - x_{i-1})^3}{6h_i} M_i + \frac{(x_i -x)^3}{6h_i} M_{i-1} + A_i(x- x_{i-1}) + B_i
+\end{align}
+
+Dove:
+\begin{align}
+  B_i = y_{i-1} - \frac{h_i^2}{6} M_{i-1} \\
+  A_i = \frac{y_i - y_{i-1}}{h_i} - \frac{h_i}{6}(M_- - M_{i-1})
+\end{align}
+
+
+Derivando varie volte si ottiene:
+\begin{align}
+  [S_{3, \Delta}^i(x)]' &= \frac{(x - x_{i-1})^2}{2h_i} M_i - \frac{(x_i -x)^2}{2h_i} M_{i-1} + A_i \\
+  [S_{3, \Delta}^i(x)]'' &= \frac{(x - x_{i-1})}{h_i} M_i + \frac{(x_i -x)}{h_i} M_{i-1} \\
+  [S_{3, \Delta}^i(x)]''' &= \frac{1}{h_i} M_i - \frac{1}{h_i} M_{i-1}
+\end{align}
+
+In tutto questo $h_i = x_i - x_{i-1}$.
+
+\subsection{Convertire momenti in coefficienti}
+\begin{align}
+  a_0^i &= y_{i-1} \\
+  a_1^i &= \frac{y_i - y_{i-1}}{h_i} - \frac{h_i}{6}(2M_{i-1} + M_i) \\
+  a_2^i &= \frac{M_{i-1}}{2} \\
+  a_3^i &= \frac{M_i - M_{i-1}}{6h_i}
+\end{align}
+
+
+\subsection{Rappresentazione con i momenti}
+\begin{align}
+  \alpha_i &= \frac{h_i}{h_i + h_{i+1}} \\
+  \beta_i &= \frac{h_{i+1}}{h_i + h_{i+1}} \\
+  d_i &= \frac{6}{h_i + h_{i+1}} \left( \frac{y_{i+1} - y_i}{h_{i+1}} - \frac{y_i - y_{i-1}}{h_i} \right)
+\end{align}
+
+E la rappresentazione diventa:
+\begin{align}
+  \alpha_i M_{i-1} + 2 M_i + \beta_i M_{i+1} = d_i, \quad i = 1, \dots, n-1
+\end{align}
+
+\section{Spline cubica naturale}
+Una spline per essere naturale deve avere i momenti $M_0 = M_n = 0$.
+Quindi i vincoli diventano:
+\begin{align}
+  \begin{cases}
+    2 M_1 + \beta_1 M_2 = d_1 \\
+    \alpha_2 M_1 + 2 M_2 + \beta_2 M_3 = d_2 \\
+    \dotfill \\
+    \alpha_{n-1} M_{n-2} + 2 M_{n-1} = d_{n-1}
+  \end{cases}
+\end{align}
+
+La matrice associata è:
+\begin{itemize}
+  \item triangolare
+  \item $\alpha_i + \beta_i = 1$
+\end{itemize}
+
+
+\section{Spline cubica vincolata}
+Le condizioni per avere una spline cubica vincolata sono:
+\begin{align}
+  [S_{3, \Delta}^i(x)]'_{x=x_0} = y_0' \\
+  [S_{3, \Delta}^i(x)]'_{x=x_n} = y_n'
+\end{align}
+
+
+
+La matrice associata è:
+\begin{itemize}
+  \item tridiagonale
+  \item triangolar dominante
+  \item irreducibile
+\end{itemize}
+
+
