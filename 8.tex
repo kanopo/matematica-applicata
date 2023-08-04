@@ -1,4 +1,80 @@
 \chapter{Non lineare}
+Uno dei problemi pi\`u comuni in matematica \`e quello di trovare le radici di un'equazione.
+
 \section{Bisezione}
 
+\subsection{Teorema degli zeri per funzioni continue}
+Sia $f : [a, b] \rightarrow R$, continua in $[a, b]$ e $f(a)f(b) < 0$. Allora esiste $x \in [a, b]$ tale che $f(x) = 0$.
 
+
+
+Iterando il controllo $f(a)f(b) < 0$ e dividendo l'intervallo a met\`a, si pu\`o trovare una radice di $f$.
+
+$c = \frac{a+b}{2}$ \`e il punto medio dell'intervallo $[a, b]$.
+
+Se $f(a)f(c) < 0$ allora la radice \`e nell'intervallo $[a, c]$ ed itero la procedura su questo intervallo.
+
+
+
+
+\subsection{Tolleranza}
+Fissando una tolleranza $\epsilon$, la procedura si interrompe quando:
+\begin{align}
+  | \alpha - x_k | \leq \epsilon
+\end{align}
+
+\begin{align}
+  k \geq \frac{\log_{10} \frac{b-a}{\epsilon}}{\log_{10} 2} \approx 3.32 \log_{10} \frac{b-a}{\epsilon}
+\end{align}
+
+Si capisce che in media sono necessarie 3.3 bisezioni per migliorare di una cifra significativa la precisione della radice.
+
+
+\newpage
+\section{Secanti}
+
+Costrusco una successione $\{x_k\}$ tale che $\forall k \geq 1$, il punto $x_{k+1}$ \`e lo \textbf{zero} della
+retta \textbf{secante} che passa per i punti:
+\begin{center}
+  \begin{tabular}{| c | c |}
+  \hline
+    $x$ & $f(x)$ \\
+  \hline
+    $x_{k-1}$ & $f(x_{k-1})$ \\
+    $x_k$ & $f(x_k)$ \\
+  \hline
+  \end{tabular}
+\end{center}
+
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{images/secandi.png}
+\end{figure}
+
+
+Se la funzione \`e \textbf{convessa} o \textbf{concava} $\in [a, b]$, la successione converge a $\alpha$ in modo 
+monotono (crescente o decrescente).
+
+\section{Corde}
+Il metodo delle corde \`e il caso generale alla base del metodo delle secanti, la $x$ successiva si calcola:
+\begin{align}
+  x_{k+1} = x_k - \frac{b-a}{f(b)-f(a)} f(x_k), \quad k \geq 0
+\end{align}
+
+
+\section{Tangenti}
+Si pu\`o applicare il metodo delle tangenti solo se la funzione \`e \textbf{derivabile} in $[a, b]$.
+Questo metodo \`e molto veloce a convergere, ma \`e molto sensibile alla scelta del punto di partenza $x_0$.
+
+
+$x_0$ dato:
+\begin{align}
+  x_{k+1} = x_k - \frac{f(x_k)}{f'(x_k)}, \quad k \geq 0
+\end{align}
+
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{images/tangenti.png}
+\end{figure}
