@@ -78,3 +78,59 @@ $x_0$ dato:
   \centering
   \includegraphics[width=0.4\textwidth]{images/tangenti.png}
 \end{figure}
+
+
+
+\section{Metodi iterativi}
+Sostanzialmente i metodi iterativi rispecchiano la forma generale:
+\begin{align}
+  x_{i+1} = g(x)
+\end{align}
+
+La funzione $g$ \`e detta \textbf{funzione di iterazione}, le caratteristiche che ci interessano sono:
+\begin{itemize}
+  \item $g \in C^1([a, b])$
+\end{itemize}
+
+
+% \section{Criteri di arresto}
+\section{Ordine di convergenza}
+Per confrontare metodi iterativi si utilizza l'ordine di convergenza.
+
+Se $\{x_i\}$ \`e una successione che converge a $\alpha$ e $x_i \neq \alpha$, se essite un numero
+reale $p \geq 1$ tale che:
+
+\begin{align}
+  lim_{i \rightarrow \infty} \frac{|x_{i+1} - \alpha|}{|x_i - \alpha|^p} = \gamma \quad \begin{cases}
+    0 < \gamma < 1 \quad \text{se} \quad p = 1 \\
+    \gamma > 0 \quad \text{se} \quad p > 1
+  \end{cases}
+\end{align}
+
+
+
+Se la successione ha ordine di convergenza $p$, la $\gamma$ \`e detta \textbf{costante asintotica di convergenza}.
+
+Se $p = 1$, la convergenza \`e \textbf{lineare}.
+Se $p > 2$, la convergenza \`e \textbf{superlineare}.
+
+
+Se $p = 1$ e $\gamma = 1$ allora la convergenza \`e \textbf{sublineare}.
+
+
+
+% \subsection{Ordine metodo delle tangenti}
+% Se l'ordine del medoto delle tangenti \`e:
+% \begin{itemize}
+%   \item $f \in C^2([a, b])$
+%   \item $f'(\alpha) \neq 0$
+%   \item $f''(\alpha) \neq 0$
+% \end{itemize}
+%
+% risulta facile determinare l'ordine:
+%
+% \begin{align}
+%   \frac{f''(\alpha)}{2f'(\alpha)}
+% \end{align}
+%
+% che risulta un valore finito
