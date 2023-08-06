@@ -1,0 +1,24 @@
+\chapter{Polinomio di Newton}
+
+Il polinomio di newton(o delle defferenze) si costruisce nel seguente modo, per i $k-1$ punti:
+
+Se $k=0$:
+\begin{align}
+  f[x_0] &= f(x_0) \\
+\end{align}
+
+Se $k=1$:
+\begin{align}
+  f[x_0,x_1] &= \frac{f[x_1]-f[x_0]}{x_1-x_0} \\
+\end{align}
+
+Se $k>1$:
+\begin{align}
+  f[x_0,x_1,\dots,x_k] &= \frac{f[x_1,x_2,\dots,x_k]-f[x_0,x_1,\dots,x_{k-1}]}{x_k-x_0} \\
+\end{align}
+
+
+Il polinomio finale si costrusce nel seguente modo:
+\begin{align}
+  f(x) = f[x_0] + (x-x_0)f[x_0,x_1] + (x-x_0)(x-x_1)f[x_0,x_1,x_2] \\ + \dots + (x-x_0)(x-x_1)\dots(x-x_{n-1})f[x_0,x_1,\dots,x_n]
+\end{align}
